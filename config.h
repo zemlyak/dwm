@@ -6,7 +6,7 @@ static const unsigned int borderpx  = 1;        /* border pixel of windows */
 static const char *upvol[]   = { "/usr/bin/pactl", "set-sink-volume", "@DEFAULT_SINK@", "+5%",     NULL };
 static const char *downvol[] = { "/usr/bin/pactl", "set-sink-volume", "@DEFAULT_SINK@", "-5%",     NULL };
 static const char *mutevol[] = { "/usr/bin/pactl", "set-sink-mute",   "@DEFAULT_SINK@", "toggle",  NULL };
-static const unsigned int gappx     = 0;        /* gaps between windows */
+static const unsigned int gappx     = 10;        /* gaps between windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const int swallowfloating    = 0;        /* 1 means swallow floating windows by default */
 static const int showbar            = 1;        /* 0 means no bar */
@@ -14,18 +14,15 @@ static const int topbar             = 1;        /* 0 means bottom bar */
 static const int usealtbar          = 1;        /* 1 means use non-dwm status bar */
 static const char *altbarclass      = "Polybar"; /* Alternate bar class name */
 static const char *alttrayname      = "tray";    /* Polybar tray instance name */
-static const char *altbarcmd        = "$HOME/bar.sh"; /* Alternate bar launch command */
+static const char *altbarcmd        = "$XDG_CONFIG_HOME/polybar/bar.sh"; /* Alternate bar launch command */
 static const char *fonts[]          = { "Hermit:size=10", "FontAwesome:size=10" };
 static const char dmenufont[]       = "Hermit:size=10";
-static const char norm_fg[] = "#e1dfe1";
-static const char norm_bg[] = "#04041D";
-static const char norm_border[] = "#9d9c9d";
-static const char sel_fg[] = "#e1dfe1";
-static const char sel_bg[] = "#964C55";
-static const char sel_border[] = "#e1dfe1";
-static const char urg_fg[] = "#e1dfe1";
-static const char urg_bg[] = "#605D6C";
-static const char urg_border[] = "#605D6C";
+static char norm_bg[] = "#2E3440";
+static char norm_border[] = "#3B4252";
+static char norm_fg[] = "#ECEFF4";
+static char sel_fg[] = "#D8DEE9";
+static char sel_border[] = "#5E81AC";
+static char sel_bg[] = "#5E81AC";
 static const char *colors[][3]      = {
     /*               fg           bg         border                         */
     [SchemeNorm] = { norm_fg,     norm_bg,   norm_border }, // unfocused wins
@@ -34,7 +31,7 @@ static const char *colors[][3]      = {
 
 
 /* tagging */
-static const char *tags[] = { "", "", "3", "4"/*, "5", "6", "7", "8", "9"*/ };
+static const char *tags[] = { "", "", "3", "4", "5", "6"/*, "7", "8", "9"*/ };
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -62,7 +59,7 @@ static const Layout layouts[] = {
 };
 
 /* key definitions */
-#define MODKEY Mod1Mask
+#define MODKEY Mod4Mask
 #define TAGKEYS(KEY,TAG) \
 	{ MODKEY,                       KEY,      view,           {.ui = 1 << TAG} }, \
 	{ MODKEY|ControlMask,           KEY,      toggleview,     {.ui = 1 << TAG} }, \
@@ -111,15 +108,15 @@ static Key keys[] = {
 	{ 0,                            XF86XK_AudioRaiseVolume, spawn, {.v = upvol   } },
 	{ MODKEY|ControlMask,           XK_comma,  tagmon,         {.i = -1 } },
 	{ MODKEY|ControlMask,           XK_period, tagmon,         {.i = +1 } },
-	{ MODKEY,                       XK_minus,  setgaps,        {.i = -1 } },
-	{ MODKEY,                       XK_equal,  setgaps,        {.i = +1 } },
-	{ MODKEY|ControlMask,           XK_equal,  setgaps,        {.i = 0  } },
+	{ MODKEY,                       XK_minus,  setgaps,        {.i = -5 } },
+	{ MODKEY,                       XK_equal,  setgaps,        {.i = +5 } },
+	{ MODKEY|ControlMask,           XK_equal,  setgaps,        {.i = 10  } },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
 	TAGKEYS(                        XK_4,                      3)
-	//TAGKEYS(                        XK_5,                      4)
-	//TAGKEYS(                        XK_6,                      5)
+	TAGKEYS(                        XK_5,                      4)
+	TAGKEYS(                        XK_6,                      5)
 	//TAGKEYS(                        XK_7,                      6)
 	//TAGKEYS(                        XK_8,                      7)
 	//TAGKEYS(                        XK_9,                      8)
